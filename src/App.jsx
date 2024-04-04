@@ -1,14 +1,25 @@
 import './App.css'
+import NavBar from './Components/NavBar';
+import Main from './Pages/Main'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
  
 
   return (
-    <>
-     <h1 className="text-3xl font-bold underline text-red-50">
-      Hello world!
-    </h1>
-    </>
+    <div className='bg-red-400 h-screen overflow-y-auto'>
+    
+    <BrowserRouter>
+    <NavBar/>
+      <div>
+    <Routes>        
+      <Route path="/"  element={<Main/>} />
+      <Route path="/favourites"  element={<Main />}/>
+      <Route path="/cart"  element={<Main/>}/>
+    </Routes>
+    </div>
+    </BrowserRouter>
+    </div>
   )
 }
 
