@@ -15,7 +15,6 @@ function App() {
     <Routes>        
       <Route path="/"  element={<Main/>} />
       <Route path="/favourites"  element={<Main />}/>
-      <Route path="/cart"  element={<Main/>}/>
     </Routes>
     </div>
     </BrowserRouter>

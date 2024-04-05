@@ -8,7 +8,7 @@ function List({pokemons}) {
   },[pokemons])
     return (
       <>
-     <div className="grid grid-rows-4 grid-flow-col gap-4">
+     <div className="grid grid-cols-4 gap-4">
       {
         pokemonsList.map((item,index)=>{
           return (
