@@ -30,7 +30,7 @@ function Favourite({ removeFromFavorites }) {
   return (
     <div>
       <h2>Mes Favoris</h2>
-      <List pokemons={favorites} removeFromFavorites={removeFromFavorites} />
+      {/* <List pokemons={favorites} removeFromFavorites={removeFromFavorites} /> */}
        <button onClick={handleSelectAll}>Sélectionner tout</button>
        {isSelected && <button onClick={handleDeleteAll}>Supprimer tout</button>}
        <div className="grid grid-rows-4 grid-flow-col gap-4">
