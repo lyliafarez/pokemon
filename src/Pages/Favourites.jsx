@@ -26,7 +26,10 @@ function Favourite({ removeFromFavorites }) {
     setIsSelected(false);
   }
 
-
+  useEffect(() => {
+    localStorage.setItem('pokemons', JSON.stringify(favorites));
+  }, [favorites]);
+  
   return (
     <div>
       <h2>Mes Favoris</h2>
