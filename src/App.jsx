@@ -1,5 +1,6 @@
 import './App.css'
 import NavBar from './Components/NavBar';
+import Favourite from './Pages/Favourites';
 import Main from './Pages/Main'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -14,7 +15,7 @@ function App() {
       <div>
     <Routes>        
       <Route path="/"  element={<Main/>} />
-      <Route path="/favourites"  element={<Main />}/>
+      <Route path="/favourites" element={<Favourite/>} />
       <Route path="/cart"  element={<Main/>}/>
     </Routes>
     </div>
