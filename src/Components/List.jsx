@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 
-
 function List({ pokemons }) {
   const [pokemonsList, setPokemonsList] = useState(pokemons);
   const [favorites, setFavorites] = useState([]);
