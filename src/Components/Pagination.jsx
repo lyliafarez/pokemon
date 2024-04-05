@@ -23,7 +23,7 @@ function Pagination({ allData,paginatedData ,currentPage, totalPages, handlePage
                prev
               </button>
             </li>
-  
+        
             {Array.from({ length: totalPages }).map((_, index) => {
               const pageNumber = index + 1;
               if (

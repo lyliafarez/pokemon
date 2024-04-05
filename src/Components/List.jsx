@@ -27,9 +27,7 @@ function List({ pokemons }) {
     }
   };
 
-  const logFavorites = () => {
-    console.log("Favoris:", favorites);
-  };
+
 
   return (
     <div>
@@ -42,7 +40,6 @@ function List({ pokemons }) {
           />
         ))}
       </div>
-      <button onClick={logFavorites}>Afficher les favoris</button>
     </div>
   );
 }

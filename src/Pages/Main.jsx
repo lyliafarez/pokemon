@@ -98,7 +98,7 @@ function Main() {
     setSearchInput(search);
     if (search.length > 0) {
       let list = pokemonData.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(searchInput.toLowerCase())
+        pokemon.name.toLowerCase().includes(search.toLowerCase())
       );
       setFilteredPokemons(list);
       const totalItems = list.length;
