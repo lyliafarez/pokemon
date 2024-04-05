@@ -1,31 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 
-<<<<<<< HEAD
-function List({pokemons}) {
-  const [pokemonsList, setPokemonsList] = useState(pokemons)
-  useEffect(()=>{
-    setPokemonsList(pokemons)
-  },[pokemons])
-    return (
-      <>
-     <div className="grid grid-cols-4 gap-4">
-      {
-        pokemonsList.map((item,index)=>{
-          return (
-            <Card pokemon={item} key={index}/>
-             
-          )
-      })
-     
-      }
-     </div>
-      </>
-    )
-  }
-  
-  export default List
-=======
+
 function List({ pokemons }) {
   const [pokemonsList, setPokemonsList] = useState(pokemons);
   const [favorites, setFavorites] = useState([]);
