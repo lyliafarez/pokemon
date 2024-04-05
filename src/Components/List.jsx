@@ -48,4 +48,3 @@ function List({ pokemons }) {
 }
 
 export default List;
->>>>>>> 041842d6743e5e278dd3d49f021f8963a3f82bd7
