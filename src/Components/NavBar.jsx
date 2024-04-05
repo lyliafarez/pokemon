@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import pokemonImg from "../img/pokemon-logo-pokemon-icon-transparent-free-png.webp"
 
+
 const NavBar=()=>{
     return (    
                 <div className='flex flex-row justify-between items-center mx-4'>
@@ -12,9 +13,7 @@ const NavBar=()=>{
                     <div className='text-white font-bold text-xl'>
                         <Link to="/favourites">Favourite</Link>
                    </div>
-                    <div className='text-white font-bold text-xl'>
-                        <Link to="/cart">Cart</Link>
-                    </div>
+                    
                 </div>
     )
 
