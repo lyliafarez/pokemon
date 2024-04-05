@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import List from "../Components/List";
 import Pagination from "../Components/Pagination";
+
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
 
@@ -49,6 +50,7 @@ function Main() {
   return (
     <div className="mt-20 flex flex-col">
       {/* search bar and title */}
+      
       <div>
         <div className="flex flex-row justify-between items-center mx-4">
           {/* Title */}
@@ -80,8 +82,10 @@ function Main() {
         </div>
 
       </div>
+      
       <div className="mx-4 mt-8">
         <List pokemons={pokemonData} key={pokemonData}/>
+        
       </div>
       <div className="mt-6">
       <Pagination

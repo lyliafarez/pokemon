@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import Card from "./Card"
 
+
 function List({pokemons}) {
   const [pokemonsList, setPokemonsList] = useState(pokemons)
+ 
+
   useEffect(()=>{
     setPokemonsList(pokemons)
   },[pokemons])
@@ -12,11 +15,9 @@ function List({pokemons}) {
       {
         pokemonsList.map((item,index)=>{
           return (
-            <Card pokemon={item} key={index}/>
-             
+            <Card pokemon={item} key={index} />
           )
       })
-     
       }
      </div>
       </>
