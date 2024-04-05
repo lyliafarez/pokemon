@@ -1,47 +1,49 @@
-import { useEffect, useState } from "react"
-import Card from "./Card"
+import React, { useEffect, useState } from "react";
+import Card from "./Card";
 
-function List({pokemons}) {
-  const [pokemonsList, setPokemonsList] = useState(pokemons)
-  const [isSelected, setIsSelected] = useState(false);
+function List({ pokemons }) {
+  const [pokemonsList, setPokemonsList] = useState(pokemons);
+  const [favorites, setFavorites] = useState([]);
 
-  useEffect(()=>{
-    setPokemonsList(pokemons)
-  },[pokemons])
+  useEffect(() => {
+    setPokemonsList(pokemons);
+  }, [pokemons]);
 
-  function handleDelete(name) {
-    const newPokemonList = pokemonsList.filter(pokemon => pokemon.name !== name);
-    setPokemonsList(newPokemonList);
-  }
+  useEffect(() => {
+    if(favorites.length > 0){
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
+  }, [favorites]);
 
-  function handleSelectAll() {
-    const updatedPokemonList = pokemonsList.map(pokemon => ({
-      ...pokemon,
-      selected: true
-    }));
-    setPokemonsList(updatedPokemonList);
-    setIsSelected(true);
-  }
+  const addToFavorites = (pokemon) => {
+    const isFavorite = favorites.find((favPokemon) => favPokemon.id === pokemon.id);
+    
+    if (isFavorite) {
+      const updatedFavorites = favorites.filter((favPokemon) => favPokemon.id !== pokemon.id);
+      setFavorites(updatedFavorites);
+    } else {
+      setFavorites([...favorites, pokemon]);
+    }
+  };
 
-  function handleDeleteAll() {
-    const newPokemonList = pokemonsList.filter(pokemon => !pokemon.selected);
-    setPokemonsList(newPokemonList);
-    setIsSelected(false);
-  }
+  const logFavorites = () => {
+    console.log("Favoris:", favorites);
+  };
 
   return (
-    <>    
     <div>
-      <button onClick={handleSelectAll}>Sélectionner tout</button>
-      {isSelected && <button onClick={handleDeleteAll}>Supprimer tout</button>}
-      <div className="grid grid-rows-4 grid-flow-col gap-4">
-        {pokemonsList.map((pokemon, index) => (
-          <Card key={index} pokemon={pokemon} list={pokemonsList} onDelete={handleDelete} />
+      <div className="grid grid-cols-4 gap-4">
+        {pokemonsList.map((item, index) => (
+          <Card
+            key={index}
+            pokemon={item}
+            addToFavorites={addToFavorites}
+          />
         ))}
       </div>
+      <button onClick={logFavorites}>Afficher les favoris</button>
     </div>
-    </>
-  )
+  );
 }
-  
-export default List
+
+export default List;
