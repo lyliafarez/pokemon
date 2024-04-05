@@ -73,6 +73,7 @@ function Favourite({ removeFromFavorites }) {
     setFavorites(newPokemonList);
     setFilteredPokemons(newPokemonList)
     setIsSelected(false);
+    localStorage.setItem('favorites', JSON.stringify([]));
   }
 
   useEffect(() => {
@@ -87,6 +88,8 @@ function Favourite({ removeFromFavorites }) {
     let totalItems = favorites.length
     setTotalPages(Math.ceil(totalItems / itemsPerPage));
   },[favorites])
+  
+  
 
   return (
     <div>
