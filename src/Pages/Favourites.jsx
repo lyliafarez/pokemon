@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import List from "../Components/List";
-import Card from "./Card";
+import Card from "../Components/Card";
 
 function Favourite({ removeFromFavorites }) {
     const [favorites, setFavorites] = useState([]);
