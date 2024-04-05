@@ -3,16 +3,18 @@ import Card from "./Card";
 
 function List({ pokemons }) {
   const [pokemonsList, setPokemonsList] = useState(pokemons);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(localStorage.getItem("favorites")) || [];
+  });
 
   useEffect(() => {
     setPokemonsList(pokemons);
   }, [pokemons]);
 
   useEffect(() => {
-    if(favorites.length > 0){
+   
       localStorage.setItem("favorites", JSON.stringify(favorites));
-    }
+    
   }, [favorites]);
 
   const addToFavorites = (pokemon) => {
@@ -26,6 +28,11 @@ function List({ pokemons }) {
     }
   };
 
+  const deleteFromFavourite = (pokemon)=>{
+    let list = favorites.filter((favPokemon)=>favPokemon.id !== pokemon.id)
+    setFavorites(list)
+  }
+
 
 
   return (
@@ -36,6 +43,7 @@ function List({ pokemons }) {
             key={index}
             pokemon={item}
             addToFavorites={addToFavorites}
+            deleteFromFavourite={deleteFromFavourite}
           />
         ))}
       </div>

@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 
-function Card({ pokemon, addToFavorites }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
+  //const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite = () => {
-    setIsFavorite(!isFavorite);
-    addToFavorites(pokemon);
+    if(pokemon.selected == false){
+    pokemon.selected = true
+    addToFavorites(pokemon);}
+    else{
+      pokemon.selected = false
+      deleteFromFavourite(pokemon)
+    }
   };
   return (
     <div className="relative flex flex-col items-center bg-white rounded-md px-2 py-2">
       <div className="absolute top-0 right-0 mt-2 mr-2">
         <button onClick={toggleFavorite}>
-          {isFavorite ? "❤️" : "🤍"}
+          {pokemon.selected ? "❤️" : "🤍"}
         </button>
       </div>
       <div className="border border-1 border-white rounded-md flex justify-center items-center">

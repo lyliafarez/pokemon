@@ -56,6 +56,7 @@ function Main() {
           console.error("Error fetching data:", error);
           break;
         }
+        
       }
 
       setTotalPages(Math.ceil(totalItems / itemsPerPage));
@@ -68,7 +69,7 @@ function Main() {
 
   const loadPokemon = async (url) => {
     let res = await axios.get(url);
-    return res.data;
+    return {...res.data,selected:false};
   };
 
   /* Pagination */
