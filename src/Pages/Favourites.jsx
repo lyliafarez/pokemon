@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import List from "../Components/List";
-import Card from "../Components/Card";
+// import Card from "../Components/Card";
 
 function Favourite({ removeFromFavorites }) {
     const [favorites, setFavorites] = useState([]);
@@ -30,14 +30,12 @@ function Favourite({ removeFromFavorites }) {
   return (
     <div>
       <h2>Mes Favoris</h2>
-      {/* <List pokemons={favorites} removeFromFavorites={removeFromFavorites} /> */}
+      <List pokemons={favorites} removeFromFavorites={removeFromFavorites} />
        <button onClick={handleSelectAll}>Sélectionner tout</button>
        {isSelected && <button onClick={handleDeleteAll}>Supprimer tout</button>}
-       <div className="grid grid-rows-4 grid-flow-col gap-4">
-        {favorites.map((pokemon, index) => (
+        {/* {favorites.map((pokemon, index) => (
         <Card key={index} pokemon={pokemon} list={favorites} />
-        ))}
-      </div>
+        ))} */}
     </div>
   );
 }
