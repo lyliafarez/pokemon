@@ -4,6 +4,7 @@ import Pagination from "../Components/Pagination";
 
 function Favourite({ removeFromFavorites }) {
     const [favorites, setFavorites] = useState([]);
+    const [isSelected, setIsSelected] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
     const [totalPages, setTotalPages] = useState(1);
@@ -57,8 +58,22 @@ function Favourite({ removeFromFavorites }) {
     setCurrentPage(1);
   };
 
+  function handleSelectAll() {
+    const updatedPokemonList = favorites.map(pokemon => ({
+      ...pokemon,
+      selected: true
+    }));
+    setFavorites(updatedPokemonList);
+    setFilteredPokemons(updatedPokemonList)
+    setIsSelected(true);
+  }
 
-
+  function handleDeleteAll() {
+    const newPokemonList = favorites.filter(pokemon => !pokemon.selected);
+    setFavorites(newPokemonList);
+    setFilteredPokemons(newPokemonList)
+    setIsSelected(false);
+  }
 
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -95,6 +110,8 @@ function Favourite({ removeFromFavorites }) {
       </div>
       
       <List pokemons={currentItems} removeFromFavorites={removeFromFavorites} />
+      <button onClick={handleSelectAll}>Sélectionner tout</button>
+       {isSelected && <button onClick={handleDeleteAll}>Supprimer tout</button>}
       <div className="mt-6">
         <Pagination
           paginatedData={currentItems}
