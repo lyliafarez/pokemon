@@ -6,7 +6,7 @@ import Pagination from "../Components/Pagination";
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
   const [totalPages, setTotalPages] = useState(1);
   const [searchInput, setSearchInput] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -14,7 +14,8 @@ function Main() {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredPokemons.slice(indexOfFirstItem, indexOfLastItem);
-
+  const [pokemonTypes, setPokemonTypes] = useState([]);
+  const types_url = "https://pokeapi.co/api/v2/type"
   /* Load first time all data */
   useEffect(() => {
     async function getData() {
@@ -58,13 +59,22 @@ function Main() {
       setFilteredPokemons(pokemonData);
     }
 
+    loadPokemonTypes(types_url)
     getData();
+    
   }, []);
 
   const loadPokemon = async (url) => {
     let res = await axios.get(url);
     return {...res.data, selected: false};
   };
+
+  const loadPokemonTypes = async (url)=>{
+    let res = await axios.get(url)
+    let types = res.data.results.map((type)=> type.name)
+    setPokemonTypes(types)
+
+  }
 
   /* Pagination */
   const handlePageChange = (pageNumber) => {
@@ -114,20 +124,22 @@ function Main() {
       setFilteredPokemons(pokemonData);
     } else {
       const list = pokemonData.filter((pokemon) =>
-        pokemon.types[0].type.name === category
+      pokemon.types.some(type => type.type.name === category)
       );
       setFilteredPokemons(list);
+      let totalItems = list.length;
+      setTotalPages(Math.ceil(totalItems / itemsPerPage));
     }
     setCurrentPage(1);
   };
 
   return (
-    <div className="mt-20 flex flex-col">
+    <div className="mt-10 flex flex-col">
       {/* search bar and title */}
       <div>
         <div className="flex flex-row justify-between items-center mx-4">
           {/* Title */}
-          <span className="font-serif text-font-bold text-4xl text-pink-200">
+          <span className="font-anton text-font-bold text-4xl text-black">
             Liste des pokemons
           </span>
           {/* Search bar */}
@@ -136,24 +148,24 @@ function Main() {
               value={searchInput}
               type="text"
               placeholder="search a pokemon"
-              className="rounded-md px-2 w-full"
+              className="rounded-md px-2 py-2 w-80 border border-black"
               onChange={handleSearchInput}
-            />
-            <input
-              type="text"
-              placeholder="search a pokemon"
-              className="rounded-md px-2 w-1/2"
             />
             <select
               name="category"
               id="category-select"
               value={selectedCategory}
               onChange={handleCategoryChange}
+              className="py-2 border border-black rounded-md"
             >
               <option value="">-- Choisissez une catégorie --</option>
-              <option value="grass">Grass</option>
+              {pokemonTypes.map((type,index)=>{
+                return(<option value={type} key={index} >{type}</option>)
+              })}
+             
+              {/* <option value="grass">Grass</option>
               <option value="fire">Fire</option>
-              <option value="water">Water</option>
+              <option value="water">Water</option> */}
             </select>
           </div>
         </div>
