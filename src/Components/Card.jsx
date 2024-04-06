@@ -22,7 +22,9 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
       pokemon.selected = false
       deleteFromFavourite(pokemon)
     }
+    location.reload()
   };
+  
   return (
     <div className="relative flex flex-col items-center bg-white rounded-md px-2 py-2" onClick={handleOpenModal}>
       <div className="absolute top-0 right-0 mt-2 mr-2">

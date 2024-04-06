@@ -112,7 +112,7 @@ function Favourite({ removeFromFavorites }) {
         </div>
       </div>
       
-      <List pokemons={currentItems} removeFromFavorites={removeFromFavorites} />
+      <List pokemons={currentItems} key={currentItems} removeFromFavorites={removeFromFavorites} />
       <button onClick={handleSelectAll}>Sélectionner tout</button>
        {isSelected && <button onClick={handleDeleteAll}>Supprimer tout</button>}
       <div className="mt-6">
