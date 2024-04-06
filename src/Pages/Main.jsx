@@ -1,4 +1,3 @@
-//import React from "react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import List from "../Components/List";
@@ -6,18 +5,15 @@ import Pagination from "../Components/Pagination";
 
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [totalPages, setTotalPages] = useState(1);
   const [searchInput, setSearchInput] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredPokemons, setFilteredPokemons] = useState([]);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPokemons.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = filteredPokemons.slice(indexOfFirstItem, indexOfLastItem);
 
   /* Load first time all data */
   useEffect(() => {
@@ -26,7 +22,6 @@ function Main() {
       const limit = 50;
       let totalItems = 0;
       let pokemonData = [];
-      //setLoading(true)
       while (true) {
         try {
           const res = await axios.get(
@@ -45,7 +40,7 @@ function Main() {
           totalItems = res.data.count;
           setTotalPages(Math.ceil(totalItems / itemsPerPage));
 
-          // Check if we've fetched all the data
+           // Check if we've fetched all the data
           if (pokemonData.length >= totalItems) {
             break;
           }
@@ -56,7 +51,6 @@ function Main() {
           console.error("Error fetching data:", error);
           break;
         }
-        
       }
 
       setTotalPages(Math.ceil(totalItems / itemsPerPage));
@@ -69,7 +63,7 @@ function Main() {
 
   const loadPokemon = async (url) => {
     let res = await axios.get(url);
-    return {...res.data,selected:false};
+    return {...res.data, selected: false};
   };
 
   /* Pagination */
@@ -113,10 +107,23 @@ function Main() {
     setCurrentPage(1);
   };
 
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
+    if (category === "") {
+      setFilteredPokemons(pokemonData);
+    } else {
+      const list = pokemonData.filter((pokemon) =>
+        pokemon.types[0].type.name === category
+      );
+      setFilteredPokemons(list);
+    }
+    setCurrentPage(1);
+  };
+
   return (
     <div className="mt-20 flex flex-col">
       {/* search bar and title */}
-      
       <div>
         <div className="flex flex-row justify-between items-center mx-4">
           {/* Title */}
@@ -137,23 +144,23 @@ function Main() {
               placeholder="search a pokemon"
               className="rounded-md px-2 w-1/2"
             />
-            <select name="pets" id="pet-select">
-              <option value="">--Please choose an option--</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
+            <select
+              name="category"
+              id="category-select"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+            >
+              <option value="">-- Choisissez une catégorie --</option>
+              <option value="grass">Grass</option>
+              <option value="fire">Fire</option>
+              <option value="water">Water</option>
             </select>
           </div>
         </div>
       </div>
-      
       <div className="mx-4 mt-8">
         <List pokemons={currentItems} key={currentItems} />
       </div>
-
       <div className="mt-6">
         <Pagination
           paginatedData={currentItems}
