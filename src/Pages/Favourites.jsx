@@ -130,7 +130,7 @@ function Favourite({ removeFromFavorites }) {
       <List pokemons={currentItems} key={currentItems} removeFromFavorites={removeFromFavorites} />
       
     <div className="mt-6 flex flex-col items-center justify-center">
-      { currentItems.length > 0 &&
+      { favorites.length > 0 &&
          <Pagination
          paginatedData={currentItems}
          allData={filteredPokemons}
@@ -143,16 +143,23 @@ function Favourite({ removeFromFavorites }) {
        />
       }
       {
-        currentItems.length == 0 && 
-        <Link to="/">
+        favorites.length == 0 && 
+        <div>
+      <div className="flex flex-col justify-center items-center gap-4 fixed bottom-[60%] right-[40%] bg-white px-10 py-10 rounded-full font-bold font-poppins text-xl">
+      <span>Pour ajouter de nouveau pokemon cliquez sur ce bouton !</span>
+      <Link to="/">
         <button className="flex flex-row  items-center px-2 py-2 bg-green-400 text-white font-semibold rounded-md hover:bg-green-300"> <PlusIcon className="w-4 h-5"/> Ajouter un pokemon</button>
       </Link>
-      }
-       
       </div>
       <div className="fixed bottom-0 right-0 -mr-[550px]">
       <img className="w-1/2 h-1/2" src={pokemonImg4}/>
       </div>
+      </div>
+      }
+       
+      </div>
+     
+      
     </div>
   );
 }
