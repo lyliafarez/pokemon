@@ -22,7 +22,6 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
       pokemon.selected = false
       deleteFromFavourite(pokemon)
     }
-    location.reload()
   };
   
   return (

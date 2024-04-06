@@ -14,7 +14,7 @@ function List({ pokemons }) {
   useEffect(() => {
    
       localStorage.setItem("favorites", JSON.stringify(favorites));
-    
+
   }, [favorites]);
 
   const addToFavorites = (pokemon) => {
@@ -31,6 +31,7 @@ function List({ pokemons }) {
   const deleteFromFavourite = (pokemon)=>{
     let list = favorites.filter((favPokemon)=>favPokemon.id !== pokemon.id)
     setFavorites(list)
+    setPokemonsList(list)
   }
 
 
