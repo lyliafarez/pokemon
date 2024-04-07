@@ -15,6 +15,7 @@ function App() {
     <BrowserRouter>
     <Header/>
     {/* <NavBar/> */}
+    <PlaySound></PlaySound>
       <div>
     <Routes>        
       <Route path="/"  element={<Main/>} />
@@ -22,7 +23,7 @@ function App() {
     </Routes>
     </div>
     </BrowserRouter>
-    <PlaySound></PlaySound>
+    
     </div>
   )
 }

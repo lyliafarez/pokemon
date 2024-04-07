@@ -3,19 +3,25 @@ import Sound from 'react-sound';
 import music from '../audio/1_Min_Pokemon_tcg_background_music.mp3'
 import { PlayIcon, PauseIcon, StopIcon} from '@heroicons/react/24/solid'
 function PlaySound() {
-    const [playStatus, setPlayStatus] = useState(Sound.status.PLAYING);
+    const [playStatus, setPlayStatus] =useState(() => {
+        return JSON.parse(localStorage.getItem("sound")) || Sound.status.PLAYING;
+      });
 
+    
 
   const handlePlay = () => {
     setPlayStatus(Sound.status.PLAYING);
+    localStorage.setItem("sound", JSON.stringify(Sound.status.PLAYING))
   };
 
   const handlePause = () => {
     setPlayStatus(Sound.status.PAUSED);
+    localStorage.setItem("sound", JSON.stringify(Sound.status.PAUSED))
   };
 
   const handleStop = () => {
     setPlayStatus(Sound.status.STOPPED);
+    localStorage.setItem("sound", JSON.stringify(Sound.status.STOPPED))
   };
 
 
