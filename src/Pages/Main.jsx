@@ -1,4 +1,3 @@
-//import React from "react";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import List from "../Components/List";
@@ -6,19 +5,17 @@ import Pagination from "../Components/Pagination";
 
 function Main() {
   const [pokemonData, setPokemonData] = useState([]);
-
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
   const [totalPages, setTotalPages] = useState(1);
   const [searchInput, setSearchInput] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [filteredPokemons, setFilteredPokemons] = useState([]);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredPokemons.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
+  const currentItems = filteredPokemons.slice(indexOfFirstItem, indexOfLastItem);
+  const [pokemonTypes, setPokemonTypes] = useState([]);
+  const types_url = "https://pokeapi.co/api/v2/type"
   /* Load first time all data */
   useEffect(() => {
     async function getData() {
@@ -26,7 +23,6 @@ function Main() {
       const limit = 50;
       let totalItems = 0;
       let pokemonData = [];
-      //setLoading(true)
       while (true) {
         try {
           const res = await axios.get(
@@ -45,7 +41,7 @@ function Main() {
           totalItems = res.data.count;
           setTotalPages(Math.ceil(totalItems / itemsPerPage));
 
-          // Check if we've fetched all the data
+           // Check if we've fetched all the data
           if (pokemonData.length >= totalItems) {
             break;
           }
@@ -63,13 +59,22 @@ function Main() {
       setFilteredPokemons(pokemonData);
     }
 
+    loadPokemonTypes(types_url)
     getData();
+    
   }, []);
 
   const loadPokemon = async (url) => {
     let res = await axios.get(url);
-    return res.data;
+    return {...res.data, selected: false};
   };
+
+  const loadPokemonTypes = async (url)=>{
+    let res = await axios.get(url)
+    let types = res.data.results.map((type)=> type.name)
+    setPokemonTypes(types)
+
+  }
 
   /* Pagination */
   const handlePageChange = (pageNumber) => {
@@ -98,7 +103,7 @@ function Main() {
     setSearchInput(search);
     if (search.length > 0) {
       let list = pokemonData.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(searchInput.toLowerCase())
+        pokemon.name.toLowerCase().includes(search.toLowerCase())
       );
       setFilteredPokemons(list);
       const totalItems = list.length;
@@ -112,13 +117,31 @@ function Main() {
     setCurrentPage(1);
   };
 
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
+    if (category === "") {
+      setFilteredPokemons(pokemonData);
+      let totalItems = pokemonData.length;
+      setTotalPages(Math.ceil(totalItems / itemsPerPage));
+    } else {
+      const list = pokemonData.filter((pokemon) =>
+      pokemon.types.some(type => type.type.name === category)
+      );
+      setFilteredPokemons(list);
+      let totalItems = list.length;
+      setTotalPages(Math.ceil(totalItems / itemsPerPage));
+    }
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="mt-20 flex flex-col">
+    <div className="mt-10 flex flex-col">
       {/* search bar and title */}
       <div>
         <div className="flex flex-row justify-between items-center mx-4">
           {/* Title */}
-          <span className="font-serif text-font-bold text-4xl text-pink-200">
+          <span className="font-anton text-font-bold text-4xl text-black">
             Liste des pokemons
           </span>
           {/* Search bar */}
@@ -127,22 +150,24 @@ function Main() {
               value={searchInput}
               type="text"
               placeholder="search a pokemon"
-              className="rounded-md px-2 w-full"
+              className="rounded-md px-2 py-2 w-80 border border-black"
               onChange={handleSearchInput}
             />
-            <input
-              type="text"
-              placeholder="search a pokemon"
-              className="rounded-md px-2 w-1/2"
-            />
-            <select name="pets" id="pet-select">
-              <option value="">--Please choose an option--</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="hamster">Hamster</option>
-              <option value="parrot">Parrot</option>
-              <option value="spider">Spider</option>
-              <option value="goldfish">Goldfish</option>
+            <select
+              name="category"
+              id="category-select"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              className="py-2 border border-black rounded-md"
+            >
+              <option value="">-- Choisissez une catégorie --</option>
+              {pokemonTypes.map((type,index)=>{
+                return(<option value={type} key={index} >{type}</option>)
+              })}
+             
+              {/* <option value="grass">Grass</option>
+              <option value="fire">Fire</option>
+              <option value="water">Water</option> */}
             </select>
           </div>
         </div>
@@ -150,7 +175,6 @@ function Main() {
       <div className="mx-4 mt-8">
         <List pokemons={currentItems} key={currentItems} />
       </div>
-
       <div className="mt-6">
         <Pagination
           paginatedData={currentItems}

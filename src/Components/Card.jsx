@@ -1,20 +1,51 @@
-import { useState,useEffect } from "react";
-
-function Card({ pokemon }) {
+import React, { useState,useEffect } from "react";
+import CharaWindow from "./CharaWindow"
+function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
+  //const [isFavorite, setIsFavorite] = useState(false);
   const [item, setPokemon] = useState(pokemon);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   useEffect(()=>{
     setPokemon(pokemon)
   },[pokemon])
+  const toggleFavorite = () => {
+    if(pokemon.selected == false){
+    pokemon.selected = true
+    addToFavorites(pokemon);}
+    else{
+      pokemon.selected = false
+      deleteFromFavourite(pokemon)
+     
+    }
+  };
+  
   return (
-    <div className="flex flex-col items-center bg-white rounded-md px-2 py-2">
-      <div className="border border-1 border-white rounded-md flex justify-center items-center">
-        <img src={item.sprites.front_default} className="h-30 w-30" />
+    <div className={`relative flex flex-col items-center border border-2 ${pokemon.types[0].type.name === "grass" ? 'bg-green-200 border-green-400' :(pokemon.types[0].type.name === 'water' ? 'bg-blue-300 border-blue-500' : (pokemon.types[0].type.name === 'fire' ? 'bg-orange-300 border-orange-500' : 'bg-purple-300 border-purple-500'))} rounded-md px-2 py-2`} onClick={handleOpenModal}>
+      <div className="absolute top-0 right-0 mt-2 mr-2">
+        <button onClick={toggleFavorite}>
+          {pokemon.selected ? "❤️" : "🤍"}
+        </button>
       </div>
+      <div className="rounded-md flex justify-center items-center">
+        <img src={pokemon.sprites.other['official-artwork'].front_default} className="h-32 w-32" alt={pokemon.name} />
+      </div>
+
       <div className="flex flex-row gap-1 justify-center items-center">
-      <span className="px-2 bg-blue-200 rounded-md text-white font-semi-bold">{item.types[0].type.name}</span>
-      <span className="font-bold">{item.name}</span>
+        {pokemon.types.map((item,index)=>{
+          return(
+            <span key={index} className="px-2 bg-blue-200 rounded-md text-white font-semi-bold">{item.type.name}</span>
+          )
+        })}
+       
+        <span className="font-bold">{pokemon.name}</span>
       </div>
-      
+      {isModalOpen && <CharaWindow closeModal={handleCloseModal} pokemon={pokemon}/>}
     </div>
   );
 }
