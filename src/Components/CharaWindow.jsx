@@ -8,13 +8,20 @@ import { Dialog, Transition } from '@headlessui/react'
 // import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
 function CharaWindow({ closeModal,pokemon }) {
+  //useState for playing audio
+  const [isPlaying, setIsPlaying] = useState(false);
 
+  const playAudio = () => {
+    const audio = new Audio(pokemon.cries.legacy);
+    audio.play();
+    setIsPlaying(true);
+  };
 
   const cancelButtonRef = useRef(null)
   let pokeId= pokemon.id;
   let pokeHeight= (pokemon.height / 10).toFixed(1)
   let pokeWeight= (pokemon.weight / 10).toFixed(1)
-  
+
 
   function abbreviateStatName(statName) {
     const abbreviations = {
@@ -31,7 +38,7 @@ function CharaWindow({ closeModal,pokemon }) {
   //function to get percentage on status bar
   function generateStatsBars(pokemon) {
     const statBars = [];
-  
+
     for (let i = 0; i < pokemon.stats.length; i++) {
       const stat = pokemon.stats[i];
       const percentage = (stat.base_stat * 100) / 255; // Calculate the percentage
@@ -74,11 +81,11 @@ function CharaWindow({ closeModal,pokemon }) {
       steel: '#B7B7CE',
       fairy: '#D685AD'
     };
-  
+
     // Check if the typeName exists in the typeColors object
     // If it does, return the corresponding color; otherwise, return a default color
     return typeColors[typeName.toLowerCase()] || '#000000'; // Default color: black
-  } 
+  }
 
   function displayPokemonTypes(pokemon) {
     return pokemon.types.map((type, index) => {
@@ -95,7 +102,7 @@ function CharaWindow({ closeModal,pokemon }) {
       );
     });
   }
-  
+
 
   return (
     <Transition.Root show={true} as={Fragment}>
@@ -126,7 +133,7 @@ function CharaWindow({ closeModal,pokemon }) {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full" style={{width:'700px'}}>
                 <div className="bg-white pb-16 pr-8">
                   <div  className="bg-[#395FAB] ">
-                    <div className="flex justify-end">      
+                    <div className="flex justify-end">
                           <span className="text-xl font-bold text-[#FFCD20] p-5 pb-0 ">
                           {pokemon.selected ? "Added to Pokédex" : "Not Added to Pokédex"}
                           </span>
@@ -138,7 +145,10 @@ function CharaWindow({ closeModal,pokemon }) {
                     <div className="sm:flex sm:items-start mx-10">
                       <div className="border-8 bg-white rounded-3xl p-5 w-72 space-y-4 mt-9" style={{borderColor:getTypeColor(pokemon.types[0].type.name)}}>
                       <img src={pokemon.sprites.other['official-artwork'].front_default} className="h-30 w-30"/>
+                      <button style={{ width: '25px',position: 'absolute',bottom: '175px', left:'235px' }}><img src="src/img/sound_audio.png" alt="sound image" className="  cursor-pointer" onClick={playAudio}/>
+                      </button>
                       </div>
+
                       <div className="ml-10 w-96 px-6 mt-16">
                         <p className="text-lg font-bold text-white">BASE STATS</p>
                         <div>{generateStatsBars(pokemon)}</div>
@@ -150,7 +160,7 @@ function CharaWindow({ closeModal,pokemon }) {
                     <div className="items-center my-1">
                       {displayPokemonTypes(pokemon)}
                     </div>
-                      
+
                     </div>
                     <div className="flex justify-end">
                     <h3 className="text-white text-opacity-60 mr-40 font-bold" style={{ fontSize: '25px' }}>OTHER INFO</h3>
