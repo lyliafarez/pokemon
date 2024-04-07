@@ -3,6 +3,7 @@ import Header from './Components/Header';
 import NavBar from './Components/NavBar';
 import Favourite from './Pages/Favourites';
 import Main from './Pages/Main'
+import PlaySound from './Components/PlaySound';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     </Routes>
     </div>
     </BrowserRouter>
+    <PlaySound></PlaySound>
     </div>
   )
 }
