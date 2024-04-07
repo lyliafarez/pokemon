@@ -141,8 +141,8 @@ function Main() {
       <div>
         <div className="flex flex-row justify-between items-center mx-4">
           {/* Title */}
-          <span className="font-anton text-font-bold text-4xl text-black">
-            Liste des pokemons
+          <span className="font-anton text-font-bold text-5xl  text-gray">
+            POKEMON LIST
           </span>
           {/* Search bar */}
           <div className="flex flex-row justify-between gap-2 items-center">
@@ -172,7 +172,7 @@ function Main() {
           </div>
         </div>
       </div>
-      <div className="mx-4 mt-8">
+      <div className="mx-4 mt-8 bg-white p-12">
         <List pokemons={currentItems} key={currentItems} />
       </div>
       <div className="mt-6">
