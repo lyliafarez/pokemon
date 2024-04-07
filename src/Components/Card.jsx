@@ -37,19 +37,11 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
         </button>
       </div>
 
-      <div className="border border-1 border-white rounded-md flex justify-center items-center">
-        <img src={pokemon.sprites.front_default} className="h-30 w-30" alt={pokemon.name}/>
-      </div>
+      
       <div className="flex flex-col items-center">
-        <div className="font-bold mb-1">{pokemon.name}</div>
-        <div className="flex flex-row gap-1 justify-center items-center">
-          <span className="px-2 bg-blue-200 rounded-md text-white font-semi-bold">{pokemon.types[0].type.name}</span>
+        <div className="rounded-md flex justify-center items-center">
+          <img src={pokemon.sprites.other['official-artwork'].front_default} className="h-32 w-32" alt={pokemon.name} />
         </div>
-
-      <div className="rounded-md flex justify-center items-center">
-        <img src={pokemon.sprites.other['official-artwork'].front_default} className="h-32 w-32" alt={pokemon.name} />
-      </div>
-
       <div className="flex flex-row gap-1 justify-center items-center">
         {pokemon.types.map((item,index)=>{
           return(
@@ -61,6 +53,7 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
 
       </div>
       {isModalOpen && <CharaWindow closeModal={handleCloseModal} pokemon={pokemon}/>}
+    </div>
     </div>
   );
 }
