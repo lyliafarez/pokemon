@@ -73,6 +73,7 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
   
   return (
     <div className={"relative flex rounded-md p-3 flex-col items-center border border-4 bg-white"}  style={{borderColor:getTypeColor(pokemon.types[0].type.name), boxShadow: '3px 3px 3px gray'}} onClick={handleOpenModal}>
+      <span className="absolute top-0 left-0  mt-2 ml-2">n°{pokemon.id}</span>
       <div className="absolute top-0 right-0 mt-2 mr-2">
         <button onClick={toggleFavorite}>
           {pokemon.selected ? "❤️" : "🤍"}

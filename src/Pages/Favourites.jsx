@@ -112,7 +112,7 @@ function Favourite({ removeFromFavorites }) {
         <div className="flex flex-row justify-between items-center mx-4 my-6">
           {/* Title */}
           <span className="font-anton text-font-bold text-4xl text-black">
-            Mes favoris
+            MY POKEDEX
           </span>
           {/* Search bar */}
           <div className="flex flex-row gap-2 items-center">
