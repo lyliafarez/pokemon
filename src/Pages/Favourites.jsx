@@ -142,6 +142,7 @@ function Favourite({ removeFromFavorites }) {
          nextPage={nextPage}
          prevPage={prevPage}
          gotoPage={gotoPage}
+         itemPerPage={itemsPerPage}
        />
       }
       {

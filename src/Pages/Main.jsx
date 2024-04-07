@@ -185,6 +185,7 @@ function Main() {
           nextPage={nextPage}
           prevPage={prevPage}
           gotoPage={gotoPage}
+          itemPerPage={itemsPerPage}
         />
       </div>
     </div>
