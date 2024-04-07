@@ -12,6 +12,91 @@ function CharaWindow({ closeModal,pokemon }) {
 
   const cancelButtonRef = useRef(null)
   let pokeId= pokemon.id;
+  let pokeHeight= (pokemon.height / 10).toFixed(1)
+  let pokeWeight= (pokemon.weight / 10).toFixed(1)
+  
+
+  function abbreviateStatName(statName) {
+    const abbreviations = {
+      'hp': 'Hp',
+      'attack': 'Atk',
+      'defense': 'Def',
+      'special-attack': 'Sp.Atk',
+      'special-defense': 'Sp.Def',
+      'speed': 'Spd'
+      // Add more mappings as needed
+    };
+    return abbreviations[statName.toLowerCase()] || statName;
+  }
+  //function to get percentage on status bar
+  function generateStatsBars(pokemon) {
+    const statBars = [];
+  
+    for (let i = 0; i < pokemon.stats.length; i++) {
+      const stat = pokemon.stats[i];
+      const percentage = (stat.base_stat * 100) / 255; // Calculate the percentage
+      statBars.push(
+        <div key={i} className="mb-2 flex items-center">
+          <div
+            className={`text-sm font-medium text-white flex ${stat.stat.name === 'special-attack' || stat.stat.name === 'special-defense' ? 'mr-2' : 'mr-4'}`}
+            style={{
+              paddingRight: stat.stat.name === 'special-attack' || stat.stat.name === 'special-defense' ? '0' : '10px',
+              justifyContent: 'right'
+            }}
+          >{abbreviateStatName(stat.stat.name)}</div>
+          <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-200">
+            <div className="bg-[#FD7D25] h-2.5 rounded-full" style={{ width: `${percentage}%` }}></div>
+          </div>
+        </div>
+      );
+    }
+    return statBars;
+  }
+
+  function getTypeColor(typeName) {
+    const typeColors = {
+      normal: '#A8A77A',
+      fire: '#EE8130',
+      water: '#6390F0',
+      electric: '#F7D02C',
+      grass: '#7AC74C',
+      ice: '#96D9D6',
+      fighting: '#C22E28',
+      poison: '#A33EA1',
+      ground: '#E2BF65',
+      flying: '#A98FF3',
+      psychic: '#F95587',
+      bug: '#A6B91A',
+      rock: '#B6A136',
+      ghost: '#735797',
+      dragon: '#6F35FC',
+      dark: '#705746',
+      steel: '#B7B7CE',
+      fairy: '#D685AD'
+    };
+  
+    // Check if the typeName exists in the typeColors object
+    // If it does, return the corresponding color; otherwise, return a default color
+    return typeColors[typeName.toLowerCase()] || '#000000'; // Default color: black
+  } 
+
+  function displayPokemonTypes(pokemon) {
+    return pokemon.types.map((type, index) => {
+      const typeName = type.type.name;
+      const bgColor = getTypeColor(typeName);
+      return (
+        <span
+          key={index}
+          className="px-2 rounded-md text-white font-semibold mr-2"
+          style={{ backgroundColor: bgColor }}
+        >
+          {typeName}
+        </span>
+      );
+    });
+  }
+  
+
   return (
     <Transition.Root show={true} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={closeModal}>
@@ -38,50 +123,55 @@ function CharaWindow({ closeModal,pokemon }) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <div  className="bg-[#1d4ed8] ">
-                    <div className="flex">
-                    <div className="flex-none w-14 ">
-                      01
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full" style={{width:'700px'}}>
+                <div className="bg-white pb-16 pr-8">
+                  <div  className="bg-[#395FAB] ">
+                    <div className="flex justify-end">      
+                          <span className="text-xl font-bold text-[#FFCD20] p-5 pb-0 ">
+                          {pokemon.selected ? "Added to Pokédex" : "Not Added to Pokédex"}
+                          </span>
                     </div>
-                    <div className="flex-auto w-60 ">
-                      <p>pokemon ID is : {pokeId}</p>
+                    <div className="flex-col px-10 ">
+                      <p className="text-xl font-bold text-white text-opacity-60">n°{pokemon.id}</p>
+                      <p className="absolute font-bold pl-5" style={{ fontSize: '35px', textTransform: 'capitalize', color:getTypeColor(pokemon.types[0].type.name) }}>{pokemon.name}</p>
                     </div>
-                    <div className="flex-auto w-34 ">
-                    <button>Add to my favorites</button>
-                    </div>
-                    </div>
-                    <div className="sm:flex sm:items-start">
-                      <div className="">
+                    <div className="sm:flex sm:items-start mx-10">
+                      <div className="border-8 bg-white rounded-3xl p-5 w-72 space-y-4 mt-9" style={{borderColor:getTypeColor(pokemon.types[0].type.name)}}>
                       <img src={pokemon.sprites.other['official-artwork'].front_default} className="h-30 w-30"/>
                       </div>
-                      <div>
-                        test
-                      </div>
-                      <div>
-                      {pokemon.id}
-                      </div>
-                      <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        {pokemon.name}
-                        </Dialog.Title>
-                        <div className="mt-2">
-                          <p className="text-sm text-gray-500">
-                          {pokeId}
-                          </p>
-                        </div>
-                        {/* change the infow when clicking next */}
-                        <button>next</button>
+                      <div className="ml-10 w-96 px-6 mt-16">
+                        <p className="text-lg font-bold text-white">BASE STATS</p>
+                        <div>{generateStatsBars(pokemon)}</div>
+                        <div className="text-sm">BASE EXP: {pokemon.base_experience}</div>
                       </div>
                     </div>
-                    <div>
-                      test the other div
+                    <div className="flex flex-col justify-left ml-10 ">
+                    <span className="font-bold">Type</span>
+                    <div className="items-center my-1">
+                      {displayPokemonTypes(pokemon)}
+                    </div>
+                      
+                    </div>
+                    <div className="flex justify-end">
+                    <h3 className="text-white text-opacity-60 mr-40 font-bold" style={{ fontSize: '25px' }}>OTHER INFO</h3>
                     </div>
                   </div>
-                  <div className="bg-[#FD5849]">
-                      <h3>Evolution</h3>
-                  </div>
+                  <div className="bg-[#FD5849] flex justify-center items-center absolute  px-15 border-2 border-gray-400 z-1 rounded-t-3xl " style={{ bottom: '-2px', left: '165px', width:'360px' ,height:'78px'}}>
+                    <div className="grid grid-cols-3 gap-4 p-4 ">
+                      <div>
+                        <h3 className="text-lg font-semibold ">Height</h3>
+                        <span>{pokeHeight} m</span>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold">Weight</h3>
+                        <span>{pokeWeight} kg</span>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold">Ability</h3>
+                        <span>{pokemon.abilities[0].ability.name}</span>
+                      </div>
+                    </div>
+                </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

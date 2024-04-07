@@ -6,7 +6,11 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
+    if (!event.target.closest('button')) {
+      // If the click did not originate from a button, open the modal
+      setIsModalOpen(true);
+    }
+    
   };
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -32,6 +36,16 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
           {pokemon.selected ? "❤️" : "🤍"}
         </button>
       </div>
+
+      <div className="border border-1 border-white rounded-md flex justify-center items-center">
+        <img src={pokemon.sprites.front_default} className="h-30 w-30" alt={pokemon.name}/>
+      </div>
+      <div className="flex flex-col items-center">
+        <div className="font-bold mb-1">{pokemon.name}</div>
+        <div className="flex flex-row gap-1 justify-center items-center">
+          <span className="px-2 bg-blue-200 rounded-md text-white font-semi-bold">{pokemon.types[0].type.name}</span>
+        </div>
+
       <div className="rounded-md flex justify-center items-center">
         <img src={pokemon.sprites.other['official-artwork'].front_default} className="h-32 w-32" alt={pokemon.name} />
       </div>
@@ -44,6 +58,7 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
         })}
        
         <span className="font-bold">{pokemon.name}</span>
+
       </div>
       {isModalOpen && <CharaWindow closeModal={handleCloseModal} pokemon={pokemon}/>}
     </div>
