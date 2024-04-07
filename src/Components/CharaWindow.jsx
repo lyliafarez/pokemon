@@ -53,9 +53,6 @@ function CharaWindow({ closeModal,pokemon }) {
     return statBars;
   }
 
- 
-  
-
   function getTypeColor(typeName) {
     const typeColors = {
       normal: '#A8A77A',
@@ -81,7 +78,7 @@ function CharaWindow({ closeModal,pokemon }) {
     // Check if the typeName exists in the typeColors object
     // If it does, return the corresponding color; otherwise, return a default color
     return typeColors[typeName.toLowerCase()] || '#000000'; // Default color: black
-  }  
+  } 
 
   function displayPokemonTypes(pokemon) {
     return pokemon.types.map((type, index) => {
@@ -98,7 +95,6 @@ function CharaWindow({ closeModal,pokemon }) {
       );
     });
   }
-  
   
 
   return (
@@ -131,7 +127,9 @@ function CharaWindow({ closeModal,pokemon }) {
                 <div className="bg-white pb-16 pr-8">
                   <div  className="bg-[#395FAB] ">
                     <div className="flex justify-end">      
-                          <span className="text-xl font-bold text-[#FFCD20] p-5 pb-0 ">Added to Pokédex</span>
+                          <span className="text-xl font-bold text-[#FFCD20] p-5 pb-0 ">
+                          {pokemon.selected ? "Added to Pokédex" : "Not Added to Pokédex"}
+                          </span>
                     </div>
                     <div className="flex-col px-10 ">
                       <p className="text-xl font-bold text-white text-opacity-60">n°{pokemon.id}</p>
@@ -152,7 +150,6 @@ function CharaWindow({ closeModal,pokemon }) {
                     <div className="items-center my-1">
                       {displayPokemonTypes(pokemon)}
                     </div>
-                      
                       
                     </div>
                     <div className="flex justify-end">
