@@ -34,8 +34,6 @@ function List({ pokemons }) {
     setPokemonsList(list)
   }
 
-
-
   return (
     <div>
       <div className="grid grid-cols-4 gap-4">

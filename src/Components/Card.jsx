@@ -32,9 +32,8 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
         </button>
       </div>
       <div className="border border-1 border-white rounded-md flex justify-center items-center">
-        <img src={pokemon.sprites.front_default} className="h-30 w-30" alt={pokemon.name} />
+        <img src={pokemon.sprites.front_default} className="h-30 w-30" alt={pokemon.name}/>
       </div>
-
       <div className="flex flex-row gap-1 justify-center items-center">
         <span className="px-2 bg-blue-200 rounded-md text-white font-semi-bold">{pokemon.types[0].type.name}</span>
         <span className="font-bold">{pokemon.name}</span>
