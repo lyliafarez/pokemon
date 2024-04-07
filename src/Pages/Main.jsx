@@ -122,6 +122,8 @@ function Main() {
     setSelectedCategory(category);
     if (category === "") {
       setFilteredPokemons(pokemonData);
+      let totalItems = pokemonData.length;
+      setTotalPages(Math.ceil(totalItems / itemsPerPage));
     } else {
       const list = pokemonData.filter((pokemon) =>
       pokemon.types.some(type => type.type.name === category)
