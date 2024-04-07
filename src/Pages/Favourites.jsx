@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { PlusIcon } from '@heroicons/react/24/outline'
 import pokemonImg4 from "../img/37701-7-pokemon-ash-transparent-image.png"
 function Favourite({ removeFromFavorites }) {
-    const [favorites, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState(() => {
+      return JSON.parse(localStorage.getItem("favorites")) || [];
+    });
     const [isSelected, setIsSelected] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(20);
