@@ -104,13 +104,15 @@ function Main() {
     let search = event.target.value;
     setSearchInput(search);
     if (search.length > 0) {
-      let list = filteredPokemons.filter((pokemon) =>
+      let data = selectedCategory !== "" ? filteredPokemons : pokemonData
+      let list = data.filter((pokemon) =>
         pokemon.name.toLowerCase().includes(search.toLowerCase())
       );
       setFilteredPokemons(list);
       const totalItems = list.length;
       setTotalPages(Math.ceil(totalItems / itemsPerPage));
     } else {
+      
       setFilteredPokemons(pokemonData);
       const totalItems = pokemonData.length;
       setTotalPages(Math.ceil(totalItems / itemsPerPage));
