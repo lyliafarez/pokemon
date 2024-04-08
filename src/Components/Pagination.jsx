@@ -11,7 +11,7 @@ function Pagination({ allData,paginatedData ,currentPage, totalPages, handlePage
         {/* Pagination Controls */}
         <div className="mt-6 flex justify-between items-center gap-4">
           <div className="text-sm text-gray-500">
-            Affichage de { (currentPage-1) * itemPerPage + paginatedData.length} sur {allData.length} resultats
+           display { (currentPage-1) * itemPerPage + paginatedData.length} over {allData.length} results
           </div>
           <ul className="inline-flex -space-x-px text-sm">
             <li>

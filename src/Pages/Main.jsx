@@ -20,7 +20,7 @@ function Main() {
   useEffect(() => {
     async function getData() {
       let currentOffset = 0;
-      const limit = 50;
+      const limit = 100;
       let totalItems = 0;
       let pokemonData = [];
       while (true) {
@@ -66,7 +66,9 @@ function Main() {
 
   const loadPokemon = async (url) => {
     let res = await axios.get(url);
-    return {...res.data, selected: false};
+    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isPokemonInList = favs.some(pokemon => pokemon.name === res.data.name);
+    return {...res.data, selected: isPokemonInList};
   };
 
   const loadPokemonTypes = async (url)=>{
@@ -142,7 +144,7 @@ function Main() {
         <div className="flex flex-row justify-between items-center mx-4">
           {/* Title */}
           <span className="font-anton text-font-bold text-4xl text-black">
-            Liste des pokemons
+            Pokemons list
           </span>
           {/* Search bar */}
           <div className="flex flex-row justify-between gap-2 items-center">
@@ -160,7 +162,7 @@ function Main() {
               onChange={handleCategoryChange}
               className="py-2 border border-black rounded-md"
             >
-              <option value="">-- Choisissez une catégorie --</option>
+              <option value="">-- Choose a category --</option>
               {pokemonTypes.map((type,index)=>{
                 return(<option value={type} key={index} >{type}</option>)
               })}

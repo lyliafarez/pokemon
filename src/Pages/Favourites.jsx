@@ -112,7 +112,7 @@ function Favourite({ removeFromFavorites }) {
         <div className="flex flex-row justify-between items-center mx-4 my-6">
           {/* Title */}
           <span className="font-anton text-font-bold text-4xl text-black">
-            Mes favoris
+            My favourites
           </span>
           {/* Search bar */}
           <div className="flex flex-row gap-2 items-center">
@@ -123,8 +123,8 @@ function Favourite({ removeFromFavorites }) {
               className="rounded-md px-2 py-2 w-80 border border-black"
               onChange={handleSearchInput}
             />
-            <button className="px-2 py-2 text-white bg-yellow-500 font-semibold rounded-md hover:bg-yellow-300" onClick={handleSelectAll}>Sélectionner tout</button>
-            {isSelected && <button className="px-2 py-2 text-white bg-red-500 font-semibold rounded-md hover:bg-red-300" onClick={handleDeleteAll}>Supprimer tout</button>}
+            <button className="px-2 py-2 text-white bg-yellow-500 font-semibold rounded-md hover:bg-yellow-300" onClick={handleSelectAll}>Select all</button>
+            {isSelected && <button className="px-2 py-2 text-white bg-red-500 font-semibold rounded-md hover:bg-red-300" onClick={handleDeleteAll}>Delete all</button>}
           </div>
         </div>
       </div>
@@ -149,9 +149,9 @@ function Favourite({ removeFromFavorites }) {
         favorites.length == 0 && 
         <div>
       <div className="flex flex-col justify-center items-center gap-4 fixed bottom-[60%] right-[40%] bg-white px-10 py-10 rounded-full font-bold font-poppins text-xl">
-      <span>Pour ajouter de nouveau pokemon cliquez sur ce bouton !</span>
+      <span> Wanna add a pokemon to your list ! click on the button down below</span>
       <Link to="/">
-        <button className="flex flex-row  items-center px-2 py-2 bg-green-400 text-white font-semibold rounded-md hover:bg-green-300"> <PlusIcon className="w-4 h-5"/> Ajouter un pokemon</button>
+        <button className="flex flex-row  items-center px-2 py-2 bg-green-400 text-white font-semibold rounded-md hover:bg-green-300"> <PlusIcon className="w-4 h-5"/> Add a pokemon</button>
       </Link>
       </div>
       <div className="fixed bottom-0 right-0 -mr-[550px]">

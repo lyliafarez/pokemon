@@ -48,7 +48,7 @@ export default function Header() {
             </div>
             <ul className="flex flex-col text-white gap-3 items-center min-h-[250px]">
               <li className="border-b border-gray-400 uppercase">
-                <a href="/">Liste des pokemons</a>
+                <a href="/">Pokemons list</a>
               </li>
               <li className="border-b border-gray-400 uppercase">
                 <a href="/favourites">PokeDex</a>
