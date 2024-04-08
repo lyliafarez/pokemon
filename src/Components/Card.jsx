@@ -66,8 +66,7 @@ function Card({ pokemon, addToFavorites ,deleteFromFavourite}) {
     addToFavorites(pokemon);}
     else{
       pokemon.selected = false
-      deleteFromFavourite(pokemon)
-     
+      deleteFromFavourite(pokemon) 
     }
   };
   

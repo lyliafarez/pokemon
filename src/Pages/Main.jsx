@@ -175,7 +175,7 @@ function Main() {
         </div>
       </div>
       <div className="mx-4 mt-8 bg-white p-12">
-        <List pokemons={currentItems} key={currentItems} />
+        <List pokemons={currentItems} key={currentItems} isMain={true} />
       </div>
       <div className="mt-6">
         <Pagination
