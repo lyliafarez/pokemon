@@ -56,7 +56,7 @@ function Favourite({ removeFromFavorites }) {
       const totalItems = list.length;
       setTotalPages(Math.ceil(totalItems / itemsPerPage));
     } else {
-      setFilteredPokemons(favorites);
+      setFilteredPokemons(JSON.parse(localStorage.getItem("favorites")));
       const totalItems = favorites.length;
       setTotalPages(Math.ceil(totalItems / itemsPerPage));
     }
@@ -103,6 +103,7 @@ function Favourite({ removeFromFavorites }) {
     let totalItems = favorites.length
     setTotalPages(Math.ceil(totalItems / itemsPerPage));
   },[favorites])
+  
   
    
 
