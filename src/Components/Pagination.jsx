@@ -1,5 +1,5 @@
 //import { BeakerIcon } from '@heroicons/react/24/outline'
-function Pagination({ allData,paginatedData ,currentPage, totalPages, handlePageChange, nextPage,prevPage,gotoPage }) {
+function Pagination({ allData,paginatedData ,currentPage, totalPages, handlePageChange, nextPage,prevPage,gotoPage ,itemPerPage}) {
     const pageNumbers = [];
   
     for (let i = 1; i <= totalPages; i++) {
@@ -11,7 +11,7 @@ function Pagination({ allData,paginatedData ,currentPage, totalPages, handlePage
         {/* Pagination Controls */}
         <div className="mt-6 flex justify-between items-center gap-4">
           <div className="text-sm text-gray-500">
-            Affichage de {paginatedData.length} sur {allData.length} resultats
+           display { (currentPage-1) * itemPerPage + paginatedData.length} over {allData.length} results
           </div>
           <ul className="inline-flex -space-x-px text-sm">
             <li>
@@ -37,7 +37,7 @@ function Pagination({ allData,paginatedData ,currentPage, totalPages, handlePage
                     <button
                       onClick={() => gotoPage(pageNumber)}
                       className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                        currentPage === pageNumber ? 'text-blue-600' : ''
+                        currentPage === pageNumber ? 'text-blue-600 bg-red-400' : ''
                       }`}
                     >
                       {pageNumber}

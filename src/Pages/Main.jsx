@@ -20,7 +20,7 @@ function Main() {
   useEffect(() => {
     async function getData() {
       let currentOffset = 0;
-      const limit = 50;
+      const limit = 100;
       let totalItems = 0;
       let pokemonData = [];
       while (true) {
@@ -66,7 +66,9 @@ function Main() {
 
   const loadPokemon = async (url) => {
     let res = await axios.get(url);
-    return {...res.data, selected: false};
+    let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isPokemonInList = favs.some(pokemon => pokemon.name === res.data.name);
+    return {...res.data, selected: isPokemonInList};
   };
 
   const loadPokemonTypes = async (url)=>{
@@ -102,7 +104,7 @@ function Main() {
     let search = event.target.value;
     setSearchInput(search);
     if (search.length > 0) {
-      let list = pokemonData.filter((pokemon) =>
+      let list = filteredPokemons.filter((pokemon) =>
         pokemon.name.toLowerCase().includes(search.toLowerCase())
       );
       setFilteredPokemons(list);
@@ -125,7 +127,7 @@ function Main() {
       let totalItems = pokemonData.length;
       setTotalPages(Math.ceil(totalItems / itemsPerPage));
     } else {
-      const list = pokemonData.filter((pokemon) =>
+      const list = filteredPokemons.filter((pokemon) =>
       pokemon.types.some(type => type.type.name === category)
       );
       setFilteredPokemons(list);
@@ -141,8 +143,8 @@ function Main() {
       <div>
         <div className="flex flex-row justify-between items-center mx-4">
           {/* Title */}
-          <span className="font-anton text-font-bold text-4xl text-black">
-            Liste des pokemons
+          <span className="font-anton text-font-bold text-5xl  text-gray">
+            POKEMON LIST
           </span>
           {/* Search bar */}
           <div className="flex flex-row justify-between gap-2 items-center">
@@ -160,7 +162,7 @@ function Main() {
               onChange={handleCategoryChange}
               className="py-2 border border-black rounded-md"
             >
-              <option value="">-- Choisissez une catégorie --</option>
+              <option value="">-- Choose a category --</option>
               {pokemonTypes.map((type,index)=>{
                 return(<option value={type} key={index} >{type}</option>)
               })}
@@ -172,7 +174,7 @@ function Main() {
           </div>
         </div>
       </div>
-      <div className="mx-4 mt-8">
+      <div className="mx-4 mt-8 bg-white p-12">
         <List pokemons={currentItems} key={currentItems} />
       </div>
       <div className="mt-6">
@@ -185,6 +187,7 @@ function Main() {
           nextPage={nextPage}
           prevPage={prevPage}
           gotoPage={gotoPage}
+          itemPerPage={itemsPerPage}
         />
       </div>
     </div>

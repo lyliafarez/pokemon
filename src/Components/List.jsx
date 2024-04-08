@@ -34,14 +34,9 @@ function List({ pokemons }) {
     setPokemonsList(list)
     
   }
-
-  
-
-
-
   return (
     <div>
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-5 gap-8">
         {pokemonsList.map((item, index) => (
           <Card
             key={index}
