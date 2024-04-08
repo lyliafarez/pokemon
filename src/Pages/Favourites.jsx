@@ -129,7 +129,7 @@ function Favourite({ removeFromFavorites }) {
         </div>
       </div>
       
-      <List pokemons={currentItems} key={currentItems} removeFromFavorites={removeFromFavorites} />
+      <List pokemons={currentItems} key={currentItems} removeFromFavorites={removeFromFavorites} isMain={false} />
       
     <div className="mt-6 flex flex-col items-center justify-center">
       { favorites.length > 0 &&

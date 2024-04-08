@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 
-function List({ pokemons }) {
+function List({ pokemons ,isMain}) {
   const [pokemonsList, setPokemonsList] = useState(pokemons);
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(localStorage.getItem("favorites")) || [];
@@ -31,8 +31,9 @@ function List({ pokemons }) {
   const deleteFromFavourite = (pokemon)=>{
     let list = favorites.filter((favPokemon)=>favPokemon.id !== pokemon.id)
     setFavorites(list)
+    if(isMain == false){
     setPokemonsList(list)
-    
+    }
   }
   return (
     <div>
